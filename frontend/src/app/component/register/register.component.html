@@ -1,0 +1,179 @@
+<form [formGroup]="registerForm" (ngSubmit)="registerOnsubmit()">
+  <div class="row mt-5">
+    <div class="col-12 text-center">
+      <h3>Register</h3>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-6 d-flex flex-column">
+      <label for="firstName" class="form-label">First Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        formControlName="firstName"
+      />
+      <div
+        class="form-text text-danger"
+        *ngIf="FirstName.errors?.['required'] && (FirstName.touched || FirstName.dirty)"
+      >
+        First name is required
+      </div>
+      <div
+        class="form-text text-danger"
+        *ngIf="FirstName.errors?.['minlength']"
+      >
+        First name is too short
+      </div>
+      <div class="form-text text-danger" *ngIf="FirstName.errors?.['pattern']">
+        First letter must be alphabet
+      </div>
+    </div>
+    <div class="col-6 d-flex flex-column">
+      <label for="lastName" class="form-label">Last Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        formControlName="lastName"
+      />
+      <div
+        class="form-text text-danger"
+        *ngIf="LastName.errors?.['required'] && (LastName.touched || LastName.dirty)"
+      >
+        Last name is required
+      </div>
+      <div class="form-text text-danger" *ngIf="LastName.errors?.['minlength']">
+        Last name is too short
+      </div>
+      <div class="form-text text-danger" *ngIf="LastName.errors?.['pattern']">
+        Last name must start with alphabets
+      </div>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-12">
+      <label for="email" class="form-label">email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+      />
+      <div
+        class="form-text text-danger"
+        *ngIf="Email.errors?.['required'] && (Email.touched || Email.dirty)"
+      >
+        Email is required
+      </div>
+      <div class="form-text text-danger" *ngIf="Email.errors?.['email']">
+        Email is invalid
+      </div>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-6">
+      <label for="mobile" class="form-label">Mobile Number</label>
+      <input
+        type="text"
+        class="form-control"
+        id="mobile"
+        formControlName="mobile"
+      />
+      <div
+        class="form-text text-danger"
+        *ngIf="Mobile.errors?.['required'] && (Mobile.touched || Mobile.dirty)"
+      >
+        Mobile number is required
+      </div>
+      <div class="form-text text-danger" *ngIf="Mobile.errors?.['minlength']">
+        Mobile number should be of 10 digits
+      </div>
+      <div class="form-text text-danger" *ngIf="Mobile.errors?.['maxlength']">
+        Mobile number should be of 10 digits
+      </div>
+      <div class="form-text text-danger" *ngIf="Mobile.errors?.['pattern']">
+        Mobile number should contain only digits
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="m-1">Gender</div>
+      <div class="form-check form-check-inline">
+        <input
+          type="radio"
+          class="form-check-input"
+          value="m"
+          id="male"
+          formControlName="gender"
+        />
+        <label for="male" class="form-check-label">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input
+          type="radio"
+          class="form-check-input"
+          value="f"
+          id="female"
+          formControlName="gender"
+        />
+        <label for="female" class="form-check-label">Female</label>
+      </div>
+      <div
+        class="form-text text-danger"
+        *ngIf="Gender.errors?.['required'] && (Gender.touched || Gender.dirty)"
+      >
+        Gender is required
+      </div>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-6">
+      <label for="pwd" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="pwd"
+        formControlName="pwd"
+      />
+      <div class="form-text text-danger" *ngIf="Pwd.errors?.['minlength']">
+        Password must be of atleast 8 characters
+      </div>
+      <div
+        class="form-text text-danger"
+        *ngIf="Pwd.errors?.['required'] && (Pwd.touched || Pwd.dirty)"
+      >
+        Password is required
+      </div>
+      <div class="form-text text-danger" *ngIf="Pwd.errors?.['maxlength']">
+        Password must be of at max 15 characters
+      </div>
+    </div>
+    <div class="col-6">
+      <label for="rpwd" class="form-label">Repeat Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="rpwd"
+        formControlName="rpwd"
+      />
+      <div class="form-text text-danger" *ngIf="Rpwd.errors?.['minlength']">
+        Password must be of atleast 8 characters
+      </div>
+      <div
+        class="form-text text-danger"
+        *ngIf="Rpwd.errors?.['required'] && (Rpwd.touched || Rpwd.dirty)"
+      >
+        Re-entering Password is required
+      </div>
+      <div class="form-text text-danger" *ngIf="Rpwd.errors?.['maxlength']">
+        Password must be of at max 15 characters
+      </div>
+      <!-- <div class="form-text text-danger" *ngIf="Rpwd.errors?.['unequal']">
+        Password must be of at max 15 characters
+      </div> -->
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center mt-5">
+    <button type="submit" class="btn btn-primary w-50">Submit</button>
+  </div>
+</form>
