@@ -156,17 +156,8 @@
         id="rpwd"
         formControlName="rpwd"
       />
-      <div class="form-text text-danger" *ngIf="Rpwd.errors?.['minlength']">
-        Password must be of atleast 8 characters
-      </div>
-      <div
-        class="form-text text-danger"
-        *ngIf="Rpwd.errors?.['required'] && (Rpwd.touched || Rpwd.dirty)"
-      >
-        Re-entering Password is required
-      </div>
-      <div class="form-text text-danger" *ngIf="Rpwd.errors?.['maxlength']">
-        Password must be of at max 15 characters
+      <div class="form-text text-danger" [ngStyle]="{ display: repeat }">
+        Passwords do not match
       </div>
       <!-- <div class="form-text text-danger" *ngIf="Rpwd.errors?.['unequal']">
         Password must be of at max 15 characters

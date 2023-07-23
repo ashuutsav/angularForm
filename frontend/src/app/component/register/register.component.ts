@@ -6,6 +6,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { CrudService } from 'src/app/services/crud.service';
 
 @Component({
   selector: 'app-register',
@@ -13,8 +14,15 @@ import {
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  constructor() {}
+  constructor(private crudService: CrudService) {
+    this.crudService.getDetails().subscribe((res) => {
+      this.details = res;
+      console.log(this.details);
+    });
+  }
   ngOnInit(): void {}
+  details: any;
+  repeat: string = 'none';
 
   get FirstName(): FormControl {
     return this.registerForm.get('firstName') as FormControl;
@@ -72,40 +80,43 @@ export class RegisterComponent implements OnInit {
       Validators.required,
       Validators.minLength(8),
       Validators.maxLength(15),
-      this.chkPwd(),
+      // this.chkPwd(),
     ]),
   });
 
   registerOnsubmit() {
-    console.log(this.registerForm.get('firstName'));
+    // console.log(this.registerForm.get('firstName'));
+    if (this.Pwd.value == this.Rpwd.value) {
+      this.repeat = 'none';
+
+      console.log('submitted');
+
+      this.crudService
+        .registerUser([
+          this.registerForm.value.firstName,
+          this.registerForm.value.lastName,
+          this.registerForm.value.email,
+          this.registerForm.value.mobile,
+          this.registerForm.value.gender,
+          this.registerForm.value.pwd,
+          this.registerForm.value.rpwd,
+        ])
+        .subscribe((res) => {
+          console.log(res);
+        });
+    } else {
+      this.repeat = 'inline';
+    }
   }
 
-  chkPwd(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: boolean } | null => {
-      const rpwdControl = this.registerForm.get('rpwd');
-      const pwdControl = this.registerForm.get('pwd');
-
-      // Check if both controls are defined before accessing their values
-      if (rpwdControl && pwdControl) {
-        const rpwdValue = rpwdControl.value;
-        const pwdValue = pwdControl.value;
-
-        // Now you can compare the values or perform any other logic
-        // For example, checking if they match:
-        if (rpwdValue === pwdValue) {
-          return null;
-        }
-      }
-
-      // Return a default value or appropriate handling if controls are undefined
-      return { unequal: true };
-
-      // let x = this.registerForm.get('pwd');
-      // if (control.value == x) {
-      //   return null;
-      // } else {
-      //   return { unequal: true };
-      // }
-    };
-  }
+  // chkPwd(): ValidatorFn {
+  //   return (control: AbstractControl): { [key: string]: boolean } | null => {
+  //     let x = this.registerForm.get('pwd');
+  //     if (control.value == x) {
+  //       return null;
+  //     } else {
+  //       return { unequal: true };
+  //     }
+  //   };
+  // }
 }
