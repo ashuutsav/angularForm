@@ -1,0 +1,9 @@
+<div *ngFor="let detail of details">
+  <p>{{ detail.firstName }}</p>
+  <p>{{ detail.lastName }}</p>
+  <p>{{ detail._id }}</p>
+  <button class="btn btn-dark" (click)="onDelete(detail._id)">delete</button>
+  <button class="btn btn-dark" [routerLink]="'/update/' + detail._id">
+    Modify
+  </button>
+</div>

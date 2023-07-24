@@ -1,4 +1,4 @@
-<form [formGroup]="registerForm" (ngSubmit)="registerOnsubmit()">
+<form [formGroup]="registerForm" (ngSubmit)="updateOnsubmit()">
   <div class="row mt-5">
     <div class="col-12 text-center">
       <h3>Register</h3>
@@ -160,8 +160,8 @@
         Passwords do not match
       </div>
       <!-- <div class="form-text text-danger" *ngIf="Rpwd.errors?.['unequal']">
-        Password must be of at max 15 characters
-      </div> -->
+          Password must be of at max 15 characters
+        </div> -->
       <!--[ngStyle]="{ display: repeat }"-->
     </div>
   </div>

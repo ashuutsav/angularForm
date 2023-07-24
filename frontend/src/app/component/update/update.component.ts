@@ -1,40 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CrudService } from 'src/app/services/crud.service';
 
-// function chkPwd(control1: string, control2: string): ValidatorFn {
-//   return (control: AbstractControl): { [key: string]: boolean } | null => {
-//     const controlValue1 = control.get(control1).value;
-//     const controlValue2 = control.get(control2).value;
-//     if (controlValue1 == controlValue2) {
-//       return null;
-//     } else {
-//       return { unequal: true };
-//     }
-//   };
-// }
-
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  selector: 'app-update',
+  templateUrl: './update.component.html',
+  styleUrls: ['./update.component.css'],
 })
-export class RegisterComponent implements OnInit {
-  constructor(private crudService: CrudService) {
-    // this.crudService.getDetails().subscribe((res) => {
-    //   this.details = res;
-    //   console.log(this.details);
-    // });
-  }
-  ngOnInit(): void {}
-  details: any;
+export class UpdateComponent implements OnInit {
+  constructor(
+    private route: ActivatedRoute,
+    private crudService: CrudService,
+    private router: Router
+  ) {}
+  id: string | null = '';
   repeat: string = 'none';
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      this.id = params.get('id');
+    });
+  }
 
   get FirstName(): FormControl {
     return this.registerForm.get('firstName') as FormControl;
@@ -97,8 +84,7 @@ export class RegisterComponent implements OnInit {
     ]),
   });
 
-  registerOnsubmit() {
-    // console.log(this.registerForm.get('firstName'));
+  updateOnsubmit() {
     if (this.Pwd.value == this.Rpwd.value) {
       this.repeat = 'none';
 
@@ -112,15 +98,18 @@ export class RegisterComponent implements OnInit {
       ) {
         console.log('no error');
         this.crudService
-          .registerUser([
-            this.registerForm.value.firstName,
-            this.registerForm.value.lastName,
-            this.registerForm.value.email,
-            this.registerForm.value.mobile,
-            this.registerForm.value.gender,
-            this.registerForm.value.pwd,
-            this.registerForm.value.rpwd,
-          ])
+          .updateDetails(
+            [
+              this.registerForm.value.firstName,
+              this.registerForm.value.lastName,
+              this.registerForm.value.email,
+              this.registerForm.value.mobile,
+              this.registerForm.value.gender,
+              this.registerForm.value.pwd,
+              this.registerForm.value.rpwd,
+            ],
+            this.id
+          )
           .subscribe((res) => {
             console.log(res);
           });
@@ -130,5 +119,6 @@ export class RegisterComponent implements OnInit {
     } else {
       this.repeat = 'inline';
     }
+    this.router.navigate(['/']);
   }
 }
